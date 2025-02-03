@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Registration Form</title>
     <style>
+      tr:hover {
+        background-color: coral;
+      }
+      th, td {
+        text-align: left;
+      }
+
+
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f9;
@@ -20,35 +28,39 @@
       h2 {
         text-align: center;
         color: #333;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        font-size: 20px;
       }
 
       form {
         background-color: #fff;
-        padding: 20px;
+        padding: 15px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         box-sizing: border-box;
+        margin-bottom: 20px;
       }
 
       fieldset {
         border: 1px solid #ddd;
         border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
+        padding: 10px;
+        margin-bottom: 10px;
       }
 
       legend {
         font-weight: bold;
         color: #555;
+        font-size: 14px;
       }
 
       label {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 3px;
         color: #333;
+        font-size: 12px;
       }
 
       input[type="text"],
@@ -57,11 +69,12 @@
       select,
       input[type="file"] {
         width: 100%;
-        padding: 8px;
-        margin-bottom: 15px;
+        padding: 6px;
+        margin-bottom: 10px;
         border: 1px solid #ddd;
         border-radius: 4px;
         box-sizing: border-box;
+        font-size: 12px;
       }
 
       input[type="radio"],
@@ -73,8 +86,8 @@
         background-color: #5cb85c;
         color: white;
         border: none;
-        padding: 10px 20px;
-        font-size: 16px;
+        padding: 8px 15px;
+        font-size: 14px;
         border-radius: 4px;
         cursor: pointer;
         width: 100%;
@@ -85,39 +98,69 @@
         background-color: #4cae4c;
       }
 
-      .form-section {
-        margin-bottom: 20px;
+      .form-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
       }
 
-      .form-section:last-child {
-        margin-bottom: 0;
+      .form-row .form-group {
+        flex: 1;
       }
 
-      .checkbox-group input,
-      .radio-group input {
-        display: inline-block;
+      .checkbox-group,
+      .radio-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
       }
 
       .checkbox-group label,
       .radio-group label {
-        display: inline-block;
-        margin-right: 10px;
+        font-size: 12px;
       }
 
-      /* Responsiveness */
+      #userTable {
+        width: 100%;
+        max-width: 600px;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 12px;
+      }
+
+      #userTable th,
+      #userTable td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+
+      #userTable th {
+        background-color: #f4f4f9;
+        font-weight: bold;
+      }
+
+      .error {
+        color: red;
+        font-size: 12px;
+        display: none;
+      }
+
       @media (max-width: 600px) {
+        .form-row {
+          flex-direction: column;
+        }
+
         h2 {
           font-size: 18px;
-          margin-bottom: 10px;
         }
 
         form {
-          padding: 15px;
-          width: 90%;
+          padding: 10px;
         }
 
         input[type="submit"] {
-          font-size: 14px;
+          font-size: 12px;
         }
       }
     </style>
@@ -125,145 +168,194 @@
   <body>
     <h2>User Registration Form</h2>
 
-    <form id="registrationForm"  method="get" enctype="multipart/form-data">
+    <form id="registrationForm" method="get" enctype="multipart/form-data">
       <fieldset>
         <legend>Basic Information</legend>
-
-        <label for="full-name">Full Name:</label>
-        <input
-          type="text"
-          id="full-name"
-          name="full-name"
-          required
-        /><br /><br />
-
-        <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email" required /><br /><br />
-
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required /><br /><br />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="full-name" name="full-name" required />
+            <span id="fullNameError" class="error">Full name must be at least 3 characters long.</span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required />
+            <span id="emailError" class="error">Please enter a valid email address.</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required />
+          </div>
+        </div>
       </fieldset>
-
-      <br />
 
       <fieldset>
         <legend>Preferences</legend>
-
-        <label>Gender:</label><br />
-        <input type="radio" id="male" name="gender" value="male" required />
-        <label for="male">Male</label><br />
-        <input type="radio" id="female" name="gender" value="female" required />
-        <label for="female">Female</label><br />
-        <input type="radio" id="other" name="gender" value="other" required />
-        <label for="other">Other</label><br /><br />
-
-        <label for="skills">Skills:</label><br />
-        <input type="checkbox" id="html" name="skills" value="HTML" />
-        <label for="html">HTML</label><br />
-        <input type="checkbox" id="css" name="skills" value="CSS" />
-        <label for="css">CSS</label><br />
-        <input
-          type="checkbox"
-          id="javascript"
-          name="skills"
-          value="JavaScript"
-        />
-        <label for="javascript">JavaScript</label><br />
-        <input type="checkbox" id="python" name="skills" value="Python" />
-        <label for="python">Python</label><br /><br />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Gender:</label>
+            <div class="radio-group">
+              <input type="radio" id="male" name="gender" value="male" required />
+              <label for="male">Male</label>
+              <input type="radio" id="female" name="gender" value="female" required />
+              <label for="female">Female</label>
+              <input type="radio" id="other" name="gender" value="other" required />
+              <label for="other">Other</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="skills">Skills:</label>
+            <div class="checkbox-group">
+              <input type="checkbox" id="html" name="skills[]" value="HTML" />
+              <label for="html">HTML</label>
+              <input type="checkbox" id="css" name="skills[]" value="CSS" />
+              <label for="css">CSS</label>
+              <input type="checkbox" id="javascript" name="skills[]" value="JavaScript" />
+              <label for="javascript">JavaScript</label>
+              <input type="checkbox" id="python" name="skills[]" value="Python" />
+              <label for="python">Python</label>
+            </div>
+          </div>
+        </div>
       </fieldset>
 
-      <br />
-
-      <fieldset>
+      <!-- <fieldset>
         <legend>Country Selection</legend>
-        <label for="country">Select Your Country:</label>
-        <select id="country" name="country" required>
-          <option value="usa">United States</option>
-          <option value="canada">Canada</option>
-          <option value="uk">United Kingdom</option>
-          <option value="india">India</option>
-          <option value="australia">Australia</option>
-          <option value="germany">Germany</option>
-          <option value="france">France</option>
-          <option value="italy">Italy</option>
-          <option value="brazil">Brazil</option>
-          <option value="japan">Japan</option></select
-        ><br /><br />
-      </fieldset>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="country">Select Your Country:</label>
+            <select id="country" name="country" required>
+              <option value="usa">United States</option>
+              <option value="canada">Canada</option>
+              <option value="uk">United Kingdom</option>
+              <option value="india">India</option>
+              <option value="australia">Australia</option>
+              <option value="germany">Germany</option>
+              <option value="france">France</option>
+              <option value="italy">Italy</option>
+              <option value="brazil">Brazil</option>
+              <option value="japan">Japan</option>
+            </select>
+          </div>
+        </div>
+      </fieldset> -->
 
-      <br />
-
-      <fieldset>
+      <!-- <fieldset>
         <legend>Profile Picture</legend>
-        <label for="profile-picture">Upload your profile picture:</label>
-        <input
-          type="file"
-          id="profile-picture"
-          name="profile-picture"
-          accept="image/*"
-          required
-        /><br /><br />
-      </fieldset>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="profile-picture">Upload your profile picture:</label>
+            <input type="file" id="profile-picture" name="profile-picture" accept="image/*" required />
+          </div>
+        </div>
+      </fieldset> -->
 
-      <br />
-
-      <fieldset>
-        <input type="submit" value="Submit" />
-      </fieldset>
+      <input type="submit" value="Submit" />
     </form>
+
+    <table id="userTable" border="1">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Skills</th>
+          <!-- <th>Country</th> -->
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
     <script>
       document.getElementById("registrationForm").addEventListener("submit", function (event) {
         event.preventDefault();
     
-        const formData = new FormData(this);
-        const formObject = {};
-        formData.forEach((value, key) => {
-          if (formObject[key]) {
-            if (!Array.isArray(formObject[key])) {
-              formObject[key] = [formObject[key]];
-            }
-            formObject[key].push(value);
-          } else {
-            formObject[key] = value;
-          }
-        });
+        const fullName = document.getElementById("full-name").value;
+        const email = document.getElementById("email").value;
+        const dob = document.getElementById("dob").value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
     
-        let htmlContent = "<h2>User Registration Summary</h2><ul>";
-        
-       
-        for (const [key, value] of Object.entries(formObject)) {
-          if (key === "profile-picture") {
-            continue;
+        const skillsCheckboxes = document.querySelectorAll('input[name="skills[]"]:checked');
+        const skills = Array.from(skillsCheckboxes).map((checkbox) => checkbox.value).join(", ");
+    
+        const fullNameError = document.getElementById("fullNameError");
+        const emailError = document.getElementById("emailError");
+    
+        fullNameError.style.display = "none";
+        emailError.style.display = "none";
+    
+        if (fullName.length < 3) {
+          fullNameError.style.display = "block";
+          return;
+        }
+    
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+          emailError.style.display = "block";
+          return;
+        }
+    
+        const tableRows = document.querySelectorAll("#userTable tbody tr");
+        for (let row of tableRows) {
+          const existingFullName = row.cells[0].textContent;
+          const existingEmail = row.cells[1].textContent;
+    
+          if (existingFullName === fullName) {
+            fullNameError.textContent = "This full name is already registered.";
+            fullNameError.style.display = "block";
+            return;
           }
-          if (Array.isArray(value)) {
-            htmlContent += `<li><strong>${key}</strong>: ${value.join(', ')}</li>`;
-          } else {
-            htmlContent += `<li><strong>${key}</strong>: ${value}</li>`;
+    
+          if (existingEmail === email) {
+            emailError.textContent = "This email is already registered.";
+            emailError.style.display = "block";
+            return;
           }
         }
     
-       
-        const newTab = window.open("", "_blank");
-        newTab.document.write(htmlContent); 
-         
+        const age = calculateAge(new Date(dob));
     
-        const profilePicture = formData.get("profile-picture");
-        if (profilePicture) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const imageHtml = `<li><strong>Profile Picture:</strong><br/><img src="${e.target.result}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;"/></li>`;
-            
-            
-            newTab.document.body.innerHTML += imageHtml;
-          };
-          reader.readAsDataURL(profilePicture);  
-        } else {
-          
-          newTab.document.write("</ul>");
-          newTab.document.close();
-        }
+        const currentDate = new Date().toLocaleDateString();
+    
+        const tableBody = document.querySelector("#userTable tbody");
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td>${fullName}</td>
+          <td>${email}</td>
+          <td>${age}</td>
+          <td>${gender}</td>
+          <td>${skills}</td>
+          <td>${currentDate}</td>
+          <td><button class="delete-btn">Delete</button></td>
+        `;
+        tableBody.appendChild(newRow);
+    
+        this.reset();
       });
+
+      document.querySelector("#userTable tbody").addEventListener("click", function (event) {
+        if (event.target && event.target.classList.contains("delete-btn")) {
+        const row = event.target.closest("tr");        
+        row.remove()
+      }
+      })
+    
+      function calculateAge(dob) {
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+          age--;
+        }
+        return age;
+      }
+
+     
     </script>
     
   </body>
